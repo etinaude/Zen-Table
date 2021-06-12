@@ -4,10 +4,14 @@
 #include "WiFi.h"
 #include "ESPAsyncWebServer.h"
 #include "SPIFFS.h"
+#include ".ignore/env.h"
 
 // Replace with your network credentials
-const char* ssid = "UoA-Unleash";
-const char* password = "UoA_Unl3ash";
+const char* ssid = ssidUnleash;
+const char* password = passwordUnleash;
+
+// const char* ssid = ssidUnleash;
+// const char* password = passwordUnleash;
 
 AsyncWebServer server(80);
 
