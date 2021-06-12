@@ -1,0 +1,6 @@
+[submodule "sand-table-pattern-maker"]
+	path = sand-table-pattern-maker
+	url = git@github.com:markroland/sand-table-pattern-maker.git
+[submodule "Sand-Table"]
+	path = Sand-Table
+	url = git@github.com:rdudhagra/Sand-Table.git
