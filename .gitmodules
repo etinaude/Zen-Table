@@ -4,3 +4,6 @@
 [submodule "Sand-Table"]
 	path = Sand-Table
 	url = https://github.com/rdudhagra/Sand-Table.git
+[submodule "sandypi"]
+	path = sandypi
+	url = https://github.com/texx00/sandypi.git

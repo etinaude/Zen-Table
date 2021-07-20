@@ -52,25 +52,18 @@ var recalculate_pattern = env.recalculate_pattern;
 
 // Master Patterns object to hold patterns
 var Patterns = {
-  "coordinates": new Coordinates(),
-  "circle": new Circle(),
-  "cross": new Cross(),
   "cycloid": new Cycloid(),
   "diameters": new Diameters(),
-  "draw": new Draw(),
   "egg": new Egg(),
   "farris": new Farris(),
   "fermatspiral": new FermatSpiral(),
   "fibonacci": new Fibonacci(),
   "fibonaccilollipops": new FibonacciLollipops(),
   "frame": new Frame(),
-  "gcode": new Gcode(),
   "gravity": new Gravity(),
   "heart": new Heart(),
   "lindenmayer": new Lindenmayer(),
   "lissajous": new Lissajous(),
-  "parametric": new Parametric(),
-  "rectangle": new Rectangle(),
   "rhodonea": new Rhodonea(),
   "shapemorph": new ShapeMorph(),
   "shapespin": new ShapeSpin(),
@@ -79,8 +72,6 @@ var Patterns = {
   "spokes": new Spokes(),
   "star": new Star(),
   "superellipse": new Superellipse(),
-  "text": new Text(),
-  "thr": new ThetaRhoInput(),
   "wigglyspiral": new WigglySpiral(),
   "zigzag": new ZigZag()
 }
@@ -208,7 +199,7 @@ function draw() {
   // Calculate path length
   distance = 0;
   for (i = 1; i < path.length; i++) {
-    distance += sqrt(pow(path[i][0] - path[i-1][0], 2) + pow(path[i][1] - path[i-1][1], 2));
+    distance += sqrt(pow(path[i][0] - path[i - 1][0], 2) + pow(path[i][1] - path[i - 1][1], 2));
   }
 
   // Display the path distance and time
@@ -228,8 +219,7 @@ function draw() {
 /**
  * Draw selected specs for the pattern configuration
  */
-function draw_pattern_config(pattern)
-{
+function draw_pattern_config(pattern) {
   var base_unit = 12;
 
   noStroke();
@@ -250,16 +240,15 @@ function draw_pattern_config(pattern)
 
   // Add footer with information about the site
   noStroke();
-  fill(128,128,128);
+  fill(128, 128, 128);
   textAlign(CENTER);
-  text('Created at https://markroland.github.io/sand-table-pattern-maker', width/2, height - 72);
+  text('Created at https://markroland.github.io/sand-table-pattern-maker', width / 2, height - 72);
 }
 
 /**
  * Check to see if the path exceeds the plotter dimensions
  */
-function path_exceeds_plotter(path)
-{
+function path_exceeds_plotter(path) {
 
   // Define function to extract column from multidimensional array
   const arrayColumn = (arr, n) => arr.map(a => a[n]);
@@ -269,16 +258,16 @@ function path_exceeds_plotter(path)
   y_coordinates = arrayColumn(path, 1);
 
   // Check boundaries
-  if (Math.min(...x_coordinates) < -((max_x - min_x)/2)) {
+  if (Math.min(...x_coordinates) < -((max_x - min_x) / 2)) {
     return true;
   }
-  if (Math.max(...x_coordinates) > max_x/2) {
+  if (Math.max(...x_coordinates) > max_x / 2) {
     return true;
   }
-  if (Math.min(...y_coordinates) < -((max_y - min_y)/2)) {
+  if (Math.min(...y_coordinates) < -((max_y - min_y) / 2)) {
     return true;
   }
-  if (Math.max(...y_coordinates) > max_y/2) {
+  if (Math.max(...y_coordinates) > max_y / 2) {
     return true;
   }
 
@@ -341,9 +330,9 @@ function patternSelectEvent(recalculate_pattern = true) {
         val.value ? val.value : val.input.params[2],
         val.input.params[3]
       )
-      .attribute('name', key)
-      .parent(control.div)
-      .addClass(val.input.class);
+        .attribute('name', key)
+        .parent(control.div)
+        .addClass(val.input.class);
     } else if (val.input.type == "createCheckbox") {
       // control.input = createInput(val.input.params[0], "checkbox") // Should it be this?
       control.input = createInput(
@@ -351,10 +340,10 @@ function patternSelectEvent(recalculate_pattern = true) {
         val.input.params[1],
         val.input.params[2]
       )
-      .attribute("type", "checkbox")
-      .attribute('name', key)
-      .attribute('checkbox', null)
-      .parent(control.div);
+        .attribute("type", "checkbox")
+        .attribute('name', key)
+        .attribute('checkbox', null)
+        .parent(control.div);
       if (val.input.params[2] == 1) {
         control.input.attribute('checked', 'checked');
       } else if (val.value) {
@@ -365,23 +354,23 @@ function patternSelectEvent(recalculate_pattern = true) {
         val.value ? val.value : val.input.params[0],
         val.input.params[1]
       )
-      .attribute('name', key)
-      .parent(control.div);
+        .attribute('name', key)
+        .parent(control.div);
     } else if (val.input.type == "createTextarea") {
       control.input = createElement(
         "textarea",
         val.value ? val.value : val.input.value,
       )
-      .attribute("rows", val.input.attributes.rows)
-      .attribute("cols", val.input.attributes.cols)
-      .attribute('name', key)
-      .parent(control.div);
+        .attribute("rows", val.input.attributes.rows)
+        .attribute("cols", val.input.attributes.cols)
+        .attribute('name', key)
+        .parent(control.div);
     }
 
     // Add change event handler
     // TODO: This doesn't work well for Textareas
     // TODO: This breaks the "Free Draw" pattern
-    control.input.changed(function(){
+    control.input.changed(function () {
       recalculate_pattern = true;
     });
 
@@ -426,8 +415,7 @@ function display_config_values() {
 /**
  * Optimize the path to remove insignificant steps
  */
-function optimizePath(path, min_distance)
-{
+function optimizePath(path, min_distance) {
   var filtered_path = new Array();
   /*
   let filtered_path = path.filter(function(element, index){
@@ -443,7 +431,7 @@ function optimizePath(path, min_distance)
   filtered_path.push(path[0]);
 
   // Subsequent positions must greater than the minimum distance to be added
-  path.forEach(function(element, index) {
+  path.forEach(function (element, index) {
     var fp_last = filtered_path[filtered_path.length - 1];
     var step_distance = sqrt(pow(element[0] - fp_last[0], 2) + pow(element[1] - fp_last[1], 2));
     if (step_distance > min_distance) {
@@ -457,8 +445,7 @@ function optimizePath(path, min_distance)
 /**
  * Download items to the browser
  */
-function download()
-{
+function download() {
 
   // Set filename
   let filename = "pattern";
@@ -500,8 +487,7 @@ function keyTyped() {
  * Save state to the URL
  * https://zellwk.com/blog/looping-through-js-objects/
  */
-function updateURL(selected_pattern)
-{
+function updateURL(selected_pattern) {
   let query_string = '?pattern=' + selected_pattern;
   const entries = Object.entries(Patterns[selected_pattern].config)
 
@@ -515,7 +501,7 @@ function updateURL(selected_pattern)
 
   // Update the browser history
   history.replaceState(
-    {id: 'homepage'},
+    { id: 'homepage' },
     document.title,
     query_string
   );
@@ -524,8 +510,7 @@ function updateURL(selected_pattern)
 /**
  * Save a Pattern configuration object
  */
-function savePatternConfig(previous_pattern)
-{
+function savePatternConfig(previous_pattern) {
   localStorage.setItem('appVersion', app_version);
   localStorage.setItem('lastSaved', new Date());
   localStorage.setItem("v" + app_version + "_" + previous_pattern, JSON.stringify(Patterns[previous_pattern].config));
@@ -534,8 +519,7 @@ function savePatternConfig(previous_pattern)
 /**
  * Load a Pattern configuration object
  */
-function loadPatternConfig(selected_pattern)
-{
+function loadPatternConfig(selected_pattern) {
   var loaded_state = JSON.parse(localStorage.getItem("v" + app_version + "_" + selected_pattern));
   if (loaded_state) {
     Patterns[selected_pattern].config = loaded_state;

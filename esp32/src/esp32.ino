@@ -36,6 +36,15 @@ void setup(){
     request->send(SPIFFS, "/index.html", "text/html");
   });
 
+
+  server.on("/redirect", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->redirect("/login");
+  });
+
+  server.on("/gcode", HTTP_POST, [](AsyncWebServerRequest *request){
+    request->send(SPIFFS, "/index.html", "text/html");
+  });
+
   server.begin();
 }
 
