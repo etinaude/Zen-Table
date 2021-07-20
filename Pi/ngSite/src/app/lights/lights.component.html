@@ -1,0 +1,27 @@
+<mat-card>
+  <mat-card-content>
+    <div class="cont">
+      <div>
+        <mat-card-title> Colors </mat-card-title>
+        <br />
+        <color-circle
+          [color]="color"
+          (onChangeComplete)="changeComplete($event)"
+        ></color-circle>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
+<br />
+<mat-card>
+  <mat-card-content>
+    <div class="cont">
+      <div>
+        <mat-card-title> Light Patterns </mat-card-title>
+        <button (click)="patterns('rainbow')" mat-raised-button>Rainbow</button>
+        <button (click)="patterns('fade')" mat-raised-button>Fade</button>
+        <button (click)="patterns('split')" mat-raised-button>Split</button>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

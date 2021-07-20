@@ -1,0 +1,30 @@
+header {
+  background-color: #f5ffdb;
+  display: flex;
+
+  position: relative;
+
+  text-align: center;
+
+  .overlay {
+    width: 100%;
+    height: 100%;
+    background-color: #ccc4;
+
+    position: absolute;
+
+    display: flex;
+
+    color: white;
+    font-weight: bolder;
+
+    h1 {
+      margin: auto;
+      font-size: 3em;
+    }
+  }
+
+  .headImg {
+    width: 100vw;
+  }
+}

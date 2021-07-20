@@ -1,0 +1,13 @@
+mat-card-content {
+  .cont {
+    display: flex;
+    div {
+      margin: auto;
+      text-align: center;
+
+      button {
+        margin: 10px;
+      }
+    }
+  }
+}
