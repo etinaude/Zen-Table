@@ -2,19 +2,31 @@
 const SerialPort = require('serialport');
 const express = require('express')
 const app = express()
+// const bodyParser = require('body-parser');
+
+const cors = require('cors');
+app.use(cors());
+app.options('*', cors());
 
 let paused = false;
 
 // const PORT = "/dev/ttyUSB0";
 
 
+// app.use(bodyParser);
 app.get('/', (req, res) => {
   res.sendFile(__dirname + "/front_end/dist/ngSite/index.html")
 })
 
-app.post("/lights/color", (req, res) => { console.log(req) })
+app.post("/lights/color/:hex", (req, res) => {
+  console.log(req.params.hex)
+  res.sendStatus(200)
+})
 
-app.post("/lights/pattern", (req, res) => { })
+app.post("/lights/pattern/:pattern", (req, res) => {
+  console.log(req.params)
+  res.sendStatus(200)
+})
 
 
 app.get("/front_end/*", (req, res) => {
@@ -22,7 +34,6 @@ app.get("/front_end/*", (req, res) => {
 })
 
 app.get("/assets/*", (req, res) => {
-  console.log(req.originalUrl)
   res.sendFile(__dirname + "/front_end/src/" + req.originalUrl)
 })
 

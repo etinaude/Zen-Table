@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,15 +8,28 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LightsComponent implements OnInit {
   color: any = '#fff';
-  constructor() {}
+  constructor(public http: HttpClient) {}
 
   ngOnInit(): void {}
 
-  changeComplete(event: any) {
-    console.log(event.color.hex);
+  async changeComplete(event: any) {
+    const hex = event.color.hex.substring(1, event.color.hex.length);
+
+    let res = await this.http.post(
+      `http://localhost:3000/lights/color/${hex}`,
+      {}
+    );
+
+    console.log(res);
   }
 
-  patterns(mode: string) {
+  async patterns(mode: string) {
     console.log(mode);
+    let res = await this.http.post(
+      `http://localhost:3000/lights/pattern/${mode}`,
+      {}
+    );
+
+    console.log(res);
   }
 }

@@ -154,11 +154,11 @@ function findRadiusAndCenterOfCircleFromPointsOnArc(x1, y1, x2, y2, x3, y3) {
     var x31 = x3 - x1;
     var x21 = x2 - x1;
 
-    // x1^2 - x3^2 
+    // x1^2 - x3^2
     var sx13 = (Math.pow(x1, 2) -
         Math.pow(x3, 2));
 
-    // y1^2 - y3^2 
+    // y1^2 - y3^2
     var sy13 = (Math.pow(y1, 2) -
         Math.pow(y3, 2));
 
@@ -182,14 +182,14 @@ function findRadiusAndCenterOfCircleFromPointsOnArc(x1, y1, x2, y2, x3, y3) {
     var c = -Math.pow(x1, 2) - Math.pow(y1, 2) -
         2 * g * x1 - 2 * f * y1;
 
-    // eqn of circle be x^2 + y^2 + 2*g*x + 2*f*y + c = 0 
-    // where centre is (h = -g, k = -f) and radius r 
-    // as r^2 = h^2 + k^2 - c 
+    // eqn of circle be x^2 + y^2 + 2*g*x + 2*f*y + c = 0
+    // where centre is (h = -g, k = -f) and radius r
+    // as r^2 = h^2 + k^2 - c
     var h = -g;
     var k = -f;
     var sqr_of_r = h * h + k * k - c;
 
-    // r is the radius 
+    // r is the radius
     return [h, k, Math.sqrt(sqr_of_r) + 0.00001]; // Add a small amount here
     // to counteract roundoff error: if the radius is too small, Marlin will crash;
     // however, the inaccuracy caused by this addition is so small I doubt anyone will notice.
@@ -236,7 +236,7 @@ function process_file(filename, callback) {
                     var drho = rho - prevRho;
                     const pi = Math.PI - 0.00001; // Intentionally NOT exactly pi
                     while (Math.abs(dtheta) > pi) {
-                        // handle cases where dtheta can be greater than 1/2 rev (>pi) 
+                        // handle cases where dtheta can be greater than 1/2 rev (>pi)
                         // by splitting them up into intervals of pi radians
 
                         var newTheta = prevTheta + pi * (dtheta >= 0 ? 1 : -1);

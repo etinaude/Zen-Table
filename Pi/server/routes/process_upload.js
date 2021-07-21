@@ -2,7 +2,9 @@ import express from 'express';
 import fs from 'fs';
 import fileupload from 'express-fileupload';
 import sharp from 'sharp';
-import { renameTrack, deleteTrack } from "./playlist_manager";
+import { process_thr_file_to_gcode } from './process_theta_rho.js';
+import { process_gcode_file_to_png } from './create_png_from_gcode.js';
+import { renameTrack, deleteTrack } from "./playlist_manager.js";
 
 const router = express.Router();
 
@@ -23,18 +25,11 @@ router.post('/', function (req, res) {
   }
   var filename = thrFile.name.replace(".thr", "");
 
-  if (fs.existsSync(__dirname + "/../../files/" + filename + ".thr"))
-    fs.unlinkSync(__dirname + "/../../files/" + filename + ".thr");
-  if (fs.existsSync(__dirname + "/../../files/" + filename + ".gcode"))
-    fs.unlinkSync(__dirname + "/../../files/" + filename + ".gcode");
-  if (fs.existsSync(__dirname + "/../../files/" + filename + ".png"))
-    fs.unlinkSync(__dirname + "/../../files/" + filename + ".png");
-  if (fs.existsSync(__dirname + "/../../files/" + filename + "-small.png"))
-    fs.unlinkSync(__dirname + "/../../files/" + filename + "-small.png");
-  if (fs.existsSync(__dirname + "/../../files/" + filename + " (fill).gcode"))
-    fs.unlinkSync(__dirname + "/../../files/" + filename + " (fill).gcode");
-  if (fs.existsSync(__dirname + "/../../files/" + filename + " (fill).png"))
-    fs.unlinkSync(__dirname + "/../../files/" + filename + " (fill).png");
+  var filename = req.body.filename;
+  if (fs.existsSync(__dirname + "/Patterns/" + filename + ".gcode"))
+    fs.unlinkSync(__dirname + "/Patterns/" + filename + ".gcode");
+  if (fs.existsSync(__dirname + "/Patterns/" + filename + " (fill).gcode"))
+    fs.unlinkSync(__dirname + "/Patterns/" + filename + " (fill).gcode");
 
   // Use the mv() method to place the file somewhere on your server
   thrFile.mv(__dirname + "/../../files/" + thrFile.name, function (err) {
@@ -63,18 +58,10 @@ router.post('/', function (req, res) {
 
 router.post("/delete", function (req, res) {
   var filename = req.body.filename;
-  if (fs.existsSync(__dirname + "/../../files/" + filename + ".thr"))
-    fs.unlinkSync(__dirname + "/../../files/" + filename + ".thr");
-  if (fs.existsSync(__dirname + "/../../files/" + filename + ".gcode"))
-    fs.unlinkSync(__dirname + "/../../files/" + filename + ".gcode");
-  if (fs.existsSync(__dirname + "/../../files/" + filename + ".png"))
-    fs.unlinkSync(__dirname + "/../../files/" + filename + ".png");
-  if (fs.existsSync(__dirname + "/../../files/" + filename + "-small.png"))
-    fs.unlinkSync(__dirname + "/../../files/" + filename + "-small.png");
-  if (fs.existsSync(__dirname + "/../../files/" + filename + " (fill).gcode"))
-    fs.unlinkSync(__dirname + "/../../files/" + filename + " (fill).gcode");
-  if (fs.existsSync(__dirname + "/../../files/" + filename + " (fill).png"))
-    fs.unlinkSync(__dirname + "/../../files/" + filename + " (fill).png");
+  if (fs.existsSync(__dirname + "/Patterns/" + filename + ".gcode"))
+    fs.unlinkSync(__dirname + "/Patterns/" + filename + ".gcode");
+  if (fs.existsSync(__dirname + "/Patterns/" + filename + " (fill).gcode"))
+    fs.unlinkSync(__dirname + "/Patterns/" + filename + " (fill).gcode");
   deleteTrack(filename);
   res.sendStatus(200);
 });
@@ -82,24 +69,11 @@ router.post("/delete", function (req, res) {
 router.post("/rename", function (req, res) {
   var filename = req.body.filename;
   var newName = req.body.newName;
-  if (fs.existsSync(__dirname + "/../../files/" + filename + ".thr"))
-    fs.renameSync(__dirname + "/../../files/" + filename + ".thr",
-      __dirname + "/../../files/" + newName + ".thr");
-  if (fs.existsSync(__dirname + "/../../files/" + filename + ".gcode"))
-    fs.renameSync(__dirname + "/../../files/" + filename + ".gcode",
-      __dirname + "/../../files/" + newName + ".gcode");
-  if (fs.existsSync(__dirname + "/../../files/" + filename + ".png"))
-    fs.renameSync(__dirname + "/../../files/" + filename + ".png",
-      __dirname + "/../../files/" + newName + ".png");
-  if (fs.existsSync(__dirname + "/../../files/" + filename + "-small.png"))
-    fs.renameSync(__dirname + "/../../files/" + filename + "-small.png",
-      __dirname + "/../../files/" + newName + "-small.png");
-  if (fs.existsSync(__dirname + "/../../files/" + filename + " (fill).gcode"))
-    fs.renameSync(__dirname + "/../../files/" + filename + " (fill).gcode",
-      __dirname + "/../../files/" + newName + " (fill).gcode");
-  if (fs.existsSync(__dirname + "/../../files/" + filename + " (fill).png"))
-    fs.renameSync(__dirname + "/../../files/" + filename + " (fill).png",
-      __dirname + "/../../files/" + newName + " (fill).png");
+  var filename = req.body.filename;
+  if (fs.existsSync(__dirname + "/Patterns/" + filename + ".gcode"))
+    fs.unlinkSync(__dirname + "/Patterns/" + filename + ".gcode");
+  if (fs.existsSync(__dirname + "/Patterns/" + filename + " (fill).gcode"))
+    fs.unlinkSync(__dirname + "/Patterns/" + filename + " (fill).gcode");
   renameTrack(filename, newName);
   res.sendStatus(200);
 });
