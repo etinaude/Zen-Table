@@ -1,0 +1,25 @@
+{
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/.*/": true,
+    "**/.vscode": true,
+    "**/*.module.ts": true,
+    "**/*.spec.ts": true,
+    "**/coverage": true,
+    "**/dist": false,
+    "**/e2e": true,
+    "**/keys/": true,
+    "**/node_modules": false,
+    "**/packag*.json": false,
+    "**/platforms/": true,
+    "**/plugins/": true,
+    "**/ts*.json": true,
+    "**/typings/": true,
+    "**/www/": true
+  },
+  "explorerExclude.backup": null
+}

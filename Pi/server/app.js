@@ -1,36 +1,71 @@
-require("dotenv").config();
 
-import express from "express";
-import http from "http";
-import bodyParser from "body-parser";
-import processupload from "./routes/process_upload.js";
-import trackmanager from "./routes/track_manager.js";
-import ledcontroller from "./routes/led_controller.js";
-import playlistmanager from "./routes/playlist_manager.js";
+const SerialPort = require('serialport');
+const express = require('express')
+const app = express()
 
-const app = express();
+let paused = false;
 
-// Disable caching
-app.set('etag', false);
-app.use((req, res, next) => {
-  res.set('Cache-Control', 'no-store')
-  next()
-});
+// const PORT = "/dev/ttyUSB0";
 
-// Static resources
-app.use(express.static(__dirname + "/../src"));
-app.use(express.static(__dirname + "/../files"));
 
-// For handling POST requests
-app.use(bodyParser.json({ limit: '50MB' }));
-app.use(bodyParser.urlencoded({ extended: false, limit: '50MB' }));
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + "/front_end/dist/ngSite/index.html")
+})
 
-// Add subroutes
-app.use("/file-upload", processupload);
-app.use("/tracks", trackmanager);
-app.use("/led", ledcontroller);
-app.use("/playlists", playlistmanager);
+app.post("/lights/color", (req, res) => { console.log(req) })
 
-app.listen(process.env.NODE_ENV == "production" ? process.env.PRODUCTION_PORT : process.env.PORT, () =>
-  console.log(`Server (${process.env.NODE_ENV}) is listening on port ${process.env.NODE_ENV == "production" ? process.env.PRODUCTION_PORT : process.env.PORT}`)
-);
+app.post("/lights/pattern", (req, res) => { })
+
+
+app.get("/front_end/*", (req, res) => {
+  res.sendFile(__dirname + req.originalUrl)
+})
+
+app.get("/assets/*", (req, res) => {
+  console.log(req.originalUrl)
+  res.sendFile(__dirname + "/front_end/src/" + req.originalUrl)
+})
+
+// const port = new SerialPort(PORT, {
+//   baudRate: 250000
+// }).on("error", (e) => console.log(e));
+// var portParser = new SerialPort.parsers.Readline();
+// port.pipe(portParser);
+
+
+app.post("/gcode", (req, res) => { })
+
+
+/*
+function sendNextCmd(data) {
+  if (paused) return;
+
+  if (data.toString('utf8').includes("ok")) {
+    if (cmdQueue.length > 0) {
+      var cmd = cmdQueue.shift();
+      port.write(cmd + "\n");
+      if (DEBUG) console.log("Send CMD: " + cmd);
+    } else if (index >= 0 && index < file.length) {
+      // Send next gcode command
+      if (file[index] == "") {
+        index++;
+        sendNextCmd(true);
+        return;
+      }
+      port.write(file[index] + "\n");
+      if (DEBUG) console.log("Send CMD: " + file[index]);
+      index++
+    } else {
+      if (file.length > 0)
+        doneCallback();
+      file = [];
+      index = 0;
+    }
+  }
+}*/
+
+
+
+app.listen(3000, () => {
+  console.log(`Example app listening at http://localhost:${3000}`)
+})
