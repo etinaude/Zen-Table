@@ -1,19 +1,31 @@
 
 const SerialPort = require('serialport');
 const express = require('express')
+const fs = require('fs')
 const app = express()
 // const bodyParser = require('body-parser');
+
+var ws281x = require('rpi-ws281x-native');
 
 const cors = require('cors');
 app.use(cors());
 app.options('*', cors());
+console.clear()
+
+let INIT_GCODE =
+  `G90
+  G21
+  M350 X16 Y16`
 
 let paused = false;
-
 // const PORT = "/dev/ttyUSB0";
+const PORT = "/dev/ttyUSB0";
+
+const com = new SerialPort(PORT, {
+  baudRate: 250000
+})
 
 
-// app.use(bodyParser);
 app.get('/', (req, res) => {
   res.sendFile(__dirname + "/front_end/dist/ngSite/index.html")
 })
@@ -24,7 +36,7 @@ app.post("/lights/color/:hex", (req, res) => {
 })
 
 app.post("/lights/pattern/:pattern", (req, res) => {
-  console.log(req.params)
+  console.log(req.params.pattern)
   res.sendStatus(200)
 })
 
@@ -37,46 +49,49 @@ app.get("/assets/*", (req, res) => {
   res.sendFile(__dirname + "/front_end/src/" + req.originalUrl)
 })
 
-// const port = new SerialPort(PORT, {
-//   baudRate: 250000
-// }).on("error", (e) => console.log(e));
-// var portParser = new SerialPort.parsers.Readline();
-// port.pipe(portParser);
+
+app.post("/sand/pattern/:pattern", (req, res) => {
+  console.log(req.params.pattern)
+
+  sendFileSerial(req.params.pattern)
+
+  res.sendStatus(200)
+})
 
 
-app.post("/gcode", (req, res) => { })
-
-
-/*
-function sendNextCmd(data) {
-  if (paused) return;
-
-  if (data.toString('utf8').includes("ok")) {
-    if (cmdQueue.length > 0) {
-      var cmd = cmdQueue.shift();
-      port.write(cmd + "\n");
-      if (DEBUG) console.log("Send CMD: " + cmd);
-    } else if (index >= 0 && index < file.length) {
-      // Send next gcode command
-      if (file[index] == "") {
-        index++;
-        sendNextCmd(true);
-        return;
-      }
-      port.write(file[index] + "\n");
-      if (DEBUG) console.log("Send CMD: " + file[index]);
-      index++
-    } else {
-      if (file.length > 0)
-        doneCallback();
-      file = [];
-      index = 0;
+function sendFileSerial(filename) {
+  let file = __dirname + `/Patterns/${filename}.gcode`
+  console.log(file)
+  fs.readFile(file, 'utf8', (err, data) => {
+    if (err) {
+      console.error(err)
+      return
     }
-  }
-}*/
+    console.log(data)
 
+    com.write(data, function (err) {
+      if (err) {
+        return console.log('Error on write: ', err.message)
+      }
+      console.log('message written')
+    })
+  })
+}
 
 
 app.listen(3000, () => {
   console.log(`Example app listening at http://localhost:${3000}`)
+  initialise()
+  // sendFileSerial("Fractal")
 })
+
+
+function initialise() {
+
+  com.write(`${INIT_GCODE}\nG0 X10 Y10 \n`, function (err) {
+    if (err) {
+      return console.log('Error on write: ', err.message)
+    }
+    console.log('message written')
+  })
+}

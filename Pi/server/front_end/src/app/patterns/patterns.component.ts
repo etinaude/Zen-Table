@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,13 +7,20 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./patterns.component.scss'],
 })
 export class PatternsComponent implements OnInit {
-  patterns = [{ name: 'a' }, { name: 'b' }];
+  patterns = [{ name: 'star' }, { name: 'spiral' }, { name: 'fractal' }];
   ngOnInit(): void {}
 
-  changeComplete(event: any) {}
+  constructor(public http: HttpClient) {}
 
-  sendPattern(event: any) {
+  async sendPattern(event: any) {
     if (!event.source.selected) return;
-    console.log(event.source.value);
+    let selected = event.source.value;
+    console.log(selected);
+
+    let res = await this.http
+      .post(`http://localhost:3000/sand/pattern/${selected}`, {})
+      .toPromise();
+
+    console.log(res);
   }
 }
