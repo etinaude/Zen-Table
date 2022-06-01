@@ -18,7 +18,7 @@
     "express-fileupload": "^1.2.1",
     "http": "0.0.1-security",
     "serialport": "^9.2.0",
-    "sharp": "^0.28.3",
+    "sharp": "^0.30.5",
     "uniq": "^1.0.1",
     "webpack": "^5.45.1"
   }
