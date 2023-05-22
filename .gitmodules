@@ -1,9 +1,0 @@
-[submodule "sand-table-pattern-maker"]
-	path = sand-table-pattern-maker
-	url = https://github.com/markroland/sand-table-pattern-maker.git
-[submodule "Sand-Table"]
-	path = Sand-Table
-	url = https://github.com/rdudhagra/Sand-Table.git
-[submodule "sandypi"]
-	path = sandypi
-	url = https://github.com/texx00/sandypi.git
