@@ -1,28 +1,28 @@
-# Sand table
+# Zen Table
 
 ![render](./build/photos/render.jpg)
 
 Each of the following sections is in its own directory with its own `README.md` file and instructions of how to use it.
 
-## Build
+## 🔩 Build
 
 - [Photos](https://photos.app.goo.gl/SDqNofCvKbGYkoxy6)
 - Bill of Materials (TODO)
 - CAD design (TODO)
 
-## ESP32
+## 💡 ESP-32
 
 - Hosts website (TODO)
 - Controls lights (TODO)
 - Sends gcode to Mega (TODO)
 
-## Mega
+## 🖥️ Mega
 
 - Running Marlin firmware (TODO)
 - Controls motors (TODO)
 - Receives gcode from ESP32 (TODO)
 
-## Resources
+## 🔗 Resources
 
 - [Another sand table project](https://github.com/rdudhagra/Sand-Table)
 - [Pattern generator](https://github.com/markroland/sand-table-pattern-maker)
