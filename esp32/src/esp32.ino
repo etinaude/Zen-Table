@@ -1,51 +1,44 @@
+/*********
+  Rui Santos
+  Complete project details at https://RandomNerdTutorials.com/esp32-vs-code-platformio-spiffs/
+*********/
 
-
-// Import required libraries
-#include "WiFi.h"
-#include "ESPAsyncWebServer.h"
+#include <Arduino.h>
 #include "SPIFFS.h"
-#include ".ignore/env.h"
 
-// Replace with your network credentials
-const char* ssid = ssidUnleash;
-const char* password = passwordUnleash;
+String results[7] = {"A", "B", "C", "D", "E", "F", "G"};
+int timeDelay = 1000 * 60 * 10;
 
-// const char* ssid = ssidUnleash;
-// const char* password = passwordUnleash;
+void setup()
+{
+  Serial.begin(9600);
 
-AsyncWebServer server(80);
-
-void setup(){
-  Serial.begin(115200);
-
-  if(!SPIFFS.begin()){
-        Serial.println("An Error has occurred while mounting SPIFFS");
-        return;
+  if (!SPIFFS.begin(true))
+  {
+    Serial.println("An Error has occurred while mounting SPIFFS");
+    return;
   }
-
-  WiFi.begin(ssid, password);
-
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(1000);
-    Serial.println("Connecting to WiFi..");
-  }
-
-  Serial.println(WiFi.localIP());
-
-  server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(SPIFFS, "/index.html", "text/html");
-  });
-
-
-  server.on("/redirect", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->redirect("/login");
-  });
-
-  server.on("/gcode", HTTP_POST, [](AsyncWebServerRequest *request){
-    request->send(SPIFFS, "/index.html", "text/html");
-  });
-
-  server.begin();
 }
 
-void loop(){}
+void loop()
+{
+  String fileName = "/patterns/" + String("A") + String(".gcode");
+
+  File file = SPIFFS.open(fileName);
+  if (!file)
+  {
+    Serial.println("Failed to open file for reading");
+    return;
+  }
+
+  Serial.println("File Content");
+  Serial.println(fileName);
+
+  while (file.available())
+  {
+    Serial.write(file.read());
+  }
+  file.close();
+
+  delay(timeDelay);
+}

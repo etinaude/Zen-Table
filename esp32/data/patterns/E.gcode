@@ -1,0 +1,94 @@
+; Created using https://markroland.github.io/sand-table-pattern-maker/
+;
+; 5/22/2023 19:13:9
+;
+; Machine Specifications:
+;
+; Units: mm
+;
+; Min X: 0
+; Max X: 472
+; Min Y: 0
+; Max Y: 380
+; Motor Speed (mm/min): 4000
+;
+; Pattern Specifications:
+;
+; Name: Circle
+;
+; Parameters:
+; - radius: [object Object]
+; - angle: [object Object]
+; - reverse: [object Object]
+;
+; URL: https://markroland.github.io/sand-table-pattern-maker/?pattern=shapespin
+;
+; Pattern Distance (mm): 9,778.5
+; Pattern Draw Time (minutes): 2.4
+
+
+; Custom G-code to execute before the start of the sketch
+
+G0 X76.00 Y190.00
+G0 X316.00 Y110.00
+G0 X396.00 Y190.00
+G0 X316.00 Y270.00
+G0 X76.00 Y190.00
+G0 X101.39 Y103.49
+G0 X346.55 Y165.95
+G0 X370.60 Y276.50
+G0 X260.04 Y300.55
+G0 X101.39 Y103.49
+G0 X169.53 Y44.45
+G0 X342.00 Y229.53
+G0 X302.46 Y335.54
+G0 X196.46 Y296.00
+G0 X169.53 Y44.45
+G0 X258.77 Y31.62
+G0 X303.80 Y280.57
+G0 X213.22 Y348.37
+G0 X145.42 Y257.80
+G0 X258.77 Y31.62
+G0 X340.77 Y69.08
+G0 X244.07 Y302.84
+G0 X131.22 Y310.91
+G0 X123.15 Y198.07
+G0 X340.77 Y69.08
+G0 X389.51 Y144.92
+G0 X181.77 Y289.29
+G0 X82.48 Y235.07
+G0 X136.70 Y135.77
+G0 X389.51 Y144.92
+G0 X389.51 Y235.07
+G0 X136.70 Y244.22
+G0 X82.48 Y144.92
+G0 X181.77 Y90.70
+G0 X389.51 Y235.07
+G0 X340.77 Y310.91
+G0 X123.15 Y181.92
+G0 X131.22 Y69.08
+G0 X244.07 Y77.15
+G0 X340.77 Y310.91
+G0 X258.77 Y348.37
+G0 X145.42 Y122.19
+G0 X213.22 Y31.62
+G0 X303.80 Y99.42
+G0 X258.77 Y348.37
+G0 X169.53 Y335.54
+G0 X196.46 Y83.99
+G0 X302.46 Y44.45
+G0 X342.00 Y150.46
+G0 X169.53 Y335.54
+G0 X101.39 Y276.50
+G0 X260.04 Y79.44
+G0 X370.60 Y103.49
+G0 X346.55 Y214.04
+G0 X101.39 Y276.50
+G0 X76.00 Y190.00
+G0 X316.00 Y109.99
+G0 X396.00 Y189.99
+G0 X316.00 Y270.00
+G0 X76.00 Y190.00
+
+; Custom G-code to execute after the end of the sketch
+
