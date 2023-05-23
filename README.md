@@ -4,19 +4,22 @@
 
 Each of the following sections is in its own directory with its own `README.md` file and instructions of how to use it.
 
-## 🔩 Build
+## [🔩 Build](./build)
 
 - [Photos](https://photos.app.goo.gl/SDqNofCvKbGYkoxy6)
-- Bill of Materials (TODO)
+- [Bill of Materials](https://docs.google.com/spreadsheets/d/1nTiWtXSQyJkAH41l_2g4mi9BzdMKPcJyHellGAf7hss/edit?usp=sharing)
 - CAD design (TODO)
+- Electronics Diagram (TODO)
+- Timing belt Diagram (TODO)
+- Build Instructions (TODO)
 
-## 💡 ESP-32
+## [💡 ESP-32](./esp32)
 
 - Hosts website (TODO)
 - Controls lights (TODO)
 - Sends gcode to Mega (TODO)
 
-## 🖥️ Mega
+## [🖥️ Mega](./mega)
 
 - Running Marlin firmware (TODO)
 - Controls motors (TODO)
